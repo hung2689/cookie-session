@@ -33,6 +33,11 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
+        if (username == null || !username.matches("[a-zA-Z0-9_]+")) {
+    request.setAttribute("msg", "Invalid username");
+    request.getRequestDispatcher("index.jsp").forward(request, response);
+    return; // DỪNG LOGIN
+}
         HttpSession session = request.getSession();
         LoginDAO dao = new LoginDAO();
         List<Login> list = dao.getListLogin();
